@@ -26,6 +26,10 @@ class ofApp : public ofBaseApp{
         int followTargetBeacon;
    float cameraDistance;
     float distanceSpeed;
+    int finishedPositionType;
+    
+    Client* finishedClient;
+    Beacon* finishedBeacon;
     
     bool finishedFollowingPacket = false;
    ofPoint finishedPosition;

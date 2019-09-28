@@ -15,7 +15,7 @@ void ofApp::setup(){
     ofAddListener(arduino.EInitialized, this, &ofApp::setupArduino);
     ofAddListener(arduino.EStringReceived, this, &ofApp::receiveString);
     
-    clients.assign(5,Client());
+    clients.assign(6,Client());
     
     for(int i=0; i< clients.size(); i++){
         clients[i].setup();
@@ -62,9 +62,9 @@ void ofApp::update(){
             cameraDistance = ofRandom(100,250);
         }else{
             cameraDirection = 1;
-            cameraDistance = ofRandom(200,400);
+            cameraDistance = ofRandom(50,150);
         }
-        distanceSpeed = ofRandom(0.1,0.8) * cameraDirection;
+        distanceSpeed = ofRandom(0.3,2) * cameraDirection;
         
         if(ofRandom(1) > 0.5){
             backgroundMode = 1;
@@ -82,7 +82,8 @@ void ofApp::update(){
     }
     
    cameraDistance += distanceSpeed;
-    
+
+    ofLog(OF_LOG_NOTICE, std::to_string(ofGetFrameRate()));
 
 }
 
@@ -118,13 +119,23 @@ void ofApp::draw(){
     
     
     if(finishedFollowingPacket){
-        camera.setTarget(finishedPosition);
+        
+        if(finishedPositionType == 1){
+            camera.setTarget(finishedClient->position);
+        }else{
+            camera.setTarget(finishedBeacon->position);
+        }
 
     }else{
         camera.setTarget(clients[followTargetClient].beacons[followTargetBeacon].packets[0].position);
-        if(clients[followTargetClient].beacons[followTargetBeacon].packets[0].progress >= 0.9){
+        if(clients[followTargetClient].beacons[followTargetBeacon].packets[0].finished){
             finishedFollowingPacket = true;
-            finishedPosition = clients[followTargetClient].beacons[followTargetBeacon].packets[0].position;
+            finishedPositionType = clients[followTargetClient].beacons[followTargetBeacon].packets[0].getDestinationType();
+            if(finishedPositionType == 1){
+                finishedClient = clients[followTargetClient].beacons[followTargetBeacon].packets[0].client;
+            }else{
+                finishedBeacon = clients[followTargetClient].beacons[followTargetBeacon].packets[0].beacon;
+            }
         }
     }
   //   camera.setTarget(clients[followTargetClient].beacons[followTargetBeacon].packets[0].position);

@@ -28,9 +28,9 @@ void Beacon::setup(Client* _client){
       if(ofRandom(1) > 0.5){
           zDir = -1;
       }
-   int x = client->position.x + ofRandom(50,300) *  xDir;
-   int y = client->position.y + ofRandom(50,300) *  yDir;
-   int z = client->position.z + ofRandom(50,300) * zDir;
+   int x = client->position.x + ofRandom(60,350) *  xDir;
+   int y = client->position.y + ofRandom(60,350) *  yDir;
+   int z = client->position.z + ofRandom(60,350) * zDir;
     
     position.set(x,y,z);
     
@@ -41,27 +41,27 @@ void Beacon::setup(Client* _client){
 }
 
 void Beacon::update(){
-    if(position.x < -600 ){
-        position.x = -600;
+    if(position.x < -900 ){
+        position.x = -900;
         speedX *= -1;
-    } else if(position.x >600){
-        position.x = 600;
+    } else if(position.x >900){
+        position.x = 900;
         speedX *= -1;
     }
     
-    if(position.y < -600 ){
-        position.y = -600;
+    if(position.y < -900 ){
+        position.y = -900;
         speedY *= -1;
-    } else if(position.y > 600){
-        position.y = 600;
+    } else if(position.y > 900){
+        position.y = 900;
         speedY *= -1;
     }
     
-    if(position.z < -600 ){
-        position.z = -600;
+    if(position.z < -900 ){
+        position.z = -900;
         speedZ *= -1;
-    } else if(position.z > 600){
-        position.z = 600;
+    } else if(position.z > 900){
+        position.z = 900;
         speedZ *= -1;
     }
     
@@ -80,15 +80,15 @@ void Beacon::update(){
         if(ofRandom(1)>0.5){
             direction = -1;
         }
-        Packet packet = Packet(speed,direction);
+        Packet packet = Packet(speed,direction,client,this);
         packets.push_back(packet);
     }
     
   for(int i=0; i< packets.size(); i++){
-      if(packets[i].finished){
+      if(packets[i].deletable){
           packets.erase(packets.begin() + i);
       }else{
-        packets[i].update(position, client->position);
+        packets[i].update();
       }
   }
 }

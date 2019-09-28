@@ -18,13 +18,13 @@ void Client::setup(){
     
     id = ofRandom(233245,99999);
     
-    float x = ofRandom(-600,600);
-    float y = ofRandom(-600,600);
-    float z = ofRandom(-600,600);
+    float x = ofRandom(-550,550);
+    float y = ofRandom(-550,550);
+    float z = ofRandom(-550,550);
     
     position.set(x,y,z);
     
-    beacons.assign(15,Beacon());
+    beacons.assign(ofRandom(10,15),Beacon());
     
     speedX = ofRandom(0, 0.5);           // and random speed and direction
     speedY = ofRandom(0, 0.5);
@@ -36,27 +36,27 @@ void Client::setup(){
 }
 
 void Client::update(){
-    if(position.x < -600 ){
-        position.x =-600;
+    if(position.x < -550 ){
+        position.x =-550;
         speedX *= -1;
-    } else if(position.x > 600){
-        position.x = 600;
+    } else if(position.x > 550){
+        position.x = 550;
         speedX *= -1;
     }
     
-    if(position.y < -600 ){
-        position.y = -600;
+    if(position.y < -550 ){
+        position.y = -550;
         speedY *= -1;
-    } else if(position.y > 600 ){
-        position.y = 600;
+    } else if(position.y > 550 ){
+        position.y = 550;
         speedY *= -1;
     }
     
-    if(position.z < -600 ){
-        position.z = -600;
+    if(position.z < -550 ){
+        position.z = -550;
         speedZ *= -1;
-    } else if(position.z > 600){
-        position.z = 600;
+    } else if(position.z > 550){
+        position.z = 550;
         speedZ *= -1;
     }
     
