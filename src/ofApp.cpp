@@ -25,7 +25,7 @@ void ofApp::setup(){
     
     arialFont.load("arial.ttf", 10, true, false);
     
-    bgSound.load("background_loop.mp3");
+    bgSound.load("bg_music.mp3");
     bgSound.play();
     bgSound.setLoop(true);
     
@@ -34,7 +34,7 @@ void ofApp::setup(){
     
     buildUp.load("build_up.mp3");
     buildUp.setLoop(true);
-    buildUp.play();
+    //buildUp.play();
 
 }
 
@@ -59,12 +59,12 @@ void ofApp::update(){
         float cameraDirection;
         if(ofRandom(1)>0.5){
             cameraDirection = -1;
-            cameraDistance = ofRandom(100,250);
+            cameraDistance = ofRandom(200,350);
         }else{
             cameraDirection = 1;
             cameraDistance = ofRandom(50,150);
         }
-        distanceSpeed = ofRandom(0.3,2) * cameraDirection;
+        distanceSpeed = ofRandom(0.2,0.9) * cameraDirection;
         
         if(ofRandom(1) > 0.5){
             backgroundMode = 1;
