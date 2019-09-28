@@ -12,18 +12,23 @@
 #include "ofMain.h"
 #include "Packet.hpp"
 
+class Client;
+
 class Beacon {
     
 public: // place public functions or variables declarations here
     
-    void setup(float _parentX,float _parentY,float _parentZ);
-    void update(ofPoint clientPosition);
+    Client* client;
+    
+    void setup(Client* _client);
+    void update();
     void draw(ofTrueTypeFont * font);
     
     ofPoint position;
     float speedY;   // speed and direction
     float speedX;
     float speedZ;
+
     
     int packetLimit;
     

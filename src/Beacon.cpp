@@ -6,12 +6,15 @@
 //
 
 #include "Beacon.hpp"
+#include "Client.hpp"
 
 Beacon::Beacon(){
     packetLimit = ofRandom(5,10);
 }
 
-void Beacon::setup(float _parentX,float _parentY,float _parentZ){
+void Beacon::setup(Client* _client){
+    
+    client = _client;
     
     float xDir = 1;
     if(ofRandom(1) > 0.5){
@@ -25,9 +28,9 @@ void Beacon::setup(float _parentX,float _parentY,float _parentZ){
       if(ofRandom(1) > 0.5){
           zDir = -1;
       }
-   int x = _parentX + ofRandom(50,300) *  xDir;
-   int y = _parentY + ofRandom(50,300) *  yDir;
-   int z = _parentZ + ofRandom(50,300) * zDir;
+   int x = client->position.x + ofRandom(50,300) *  xDir;
+   int y = client->position.y + ofRandom(50,300) *  yDir;
+   int z = client->position.z + ofRandom(50,300) * zDir;
     
     position.set(x,y,z);
     
@@ -37,7 +40,7 @@ void Beacon::setup(float _parentX,float _parentY,float _parentZ){
     
 }
 
-void Beacon::update(ofPoint clientPosition){
+void Beacon::update(){
     if(position.x < -600 ){
         position.x = -600;
         speedX *= -1;
@@ -85,7 +88,7 @@ void Beacon::update(ofPoint clientPosition){
       if(packets[i].finished){
           packets.erase(packets.begin() + i);
       }else{
-        packets[i].update(position, clientPosition);
+        packets[i].update(position, client->position);
       }
   }
 }

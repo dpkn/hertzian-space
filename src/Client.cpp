@@ -31,7 +31,7 @@ void Client::setup(){
     speedZ = ofRandom(0, 0.5);
     
     for(int i=0; i< beacons.size(); i++){
-        beacons[i].setup(x,y,z);
+        beacons[i].setup(this);
     }
 }
 
@@ -65,7 +65,7 @@ void Client::update(){
     position.z+=speedZ;
     
     for(int i=0; i< beacons.size(); i++){
-        beacons[i].update(position);
+        beacons[i].update();
     }
     
 }
