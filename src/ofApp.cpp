@@ -3,6 +3,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    ofHideCursor();
+    
     backgroundValue = 0;
     backgroundCounter = 0;
     backgroundFadeSpeed = 5;
@@ -21,16 +23,16 @@ void ofApp::setup(){
         clients[i].setup();
     }
     
-   // ofLog(OF_LOG_NOTICE, "hallo pls log");
-    
     arialFont.load("arial.ttf", 10, true, false);
     
-    bgSound.load("bg_music.mp3");
+    bgSound.load("bg_music2_loud.mp3");
     bgSound.play();
     bgSound.setLoop(true);
+    bgSound.setVolume(2);
     
     highBeep.load("beep_high.mp3");
     highBeep.setMultiPlay(true);
+    highBeep.setVolume(0.4);
     
     buildUp.load("build_up.mp3");
     buildUp.setLoop(true);
@@ -59,7 +61,7 @@ void ofApp::update(){
         float cameraDirection;
         if(ofRandom(1)>0.5){
             cameraDirection = -1;
-            cameraDistance = ofRandom(200,350);
+            cameraDistance = ofRandom(250,400);
         }else{
             cameraDirection = 1;
             cameraDistance = ofRandom(50,150);
@@ -111,7 +113,7 @@ void ofApp::draw(){
 
 
     camera.begin();
-   //       ofLog(OF_LOG_NOTICE, "camera"+std::to_string(camera.getPosition()));
+
     
     for(int i=0; i<clients.size(); i++){
         clients[i].draw(&arialFont);
@@ -138,13 +140,9 @@ void ofApp::draw(){
             }
         }
     }
-  //   camera.setTarget(clients[followTargetClient].beacons[followTargetBeacon].packets[0].position);
-    
+
     camera.setDistance(cameraDistance);
-    
-    if(backgroundCounter >=300){
-    
-    }
+
     
    camera.end();
      
