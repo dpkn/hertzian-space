@@ -96,12 +96,16 @@ void ofApp::draw(){
     
 }
 
+// Function that is called when a new packet should be followed.
 void ofApp::resetView(){
+    // Play BEEP and show white flash
+    highBeep.play();
     backgroundController.reset();
     
+    // Reset timer
     timerStartTime = ofGetElapsedTimeMillis();
-    highBeep.play();
 
+    // Pick new random packet to follow
     int randomClientId = ofRandom(clients.size());
     int randomBeaconId = ofRandom(clients[randomClientId].beacons.size());
     cameraTarget = &clients[randomClientId].beacons[randomBeaconId].packets[0];
