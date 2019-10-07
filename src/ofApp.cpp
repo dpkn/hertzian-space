@@ -116,7 +116,7 @@ void ofApp::draw(){
 
     
     for(int i=0; i<clients.size(); i++){
-        clients[i].draw(&arialFont);
+        clients[i].draw();
     }
     
     

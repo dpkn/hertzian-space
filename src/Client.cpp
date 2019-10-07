@@ -1,10 +1,6 @@
 //
 //  Client.cpp
-//  emptyExample
 //
-//  Created by Daan Korssen on 05/09/2019.
-//
-
 #include "Client.hpp"
 using namespace glm;
 
@@ -26,7 +22,7 @@ void Client::setup(){
     
     beacons.assign(ofRandom(10,15),Beacon());
     
-    speedX = ofRandom(0, 0.5);           // and random speed and direction
+    speedX = ofRandom(0, 0.5);
     speedY = ofRandom(0, 0.5);
     speedZ = ofRandom(0, 0.5);
     
@@ -70,20 +66,17 @@ void Client::update(){
     
 }
 
-void Client::draw(ofTrueTypeFont * font){
+void Client::draw(){
     
-    // Red Sphere
+    // Draw a red sphere
     ofSetSphereResolution(10);
     ofSetColor(255,0,0);
     ofDrawSphere(position.x,position.y,position.z,40);
     
-    // plus sign
+    // Draw a plus (+) sign at the center of the sphere
     ofDrawLine(position.x-5,position.y,position.z,position.x+5,position.y,position.z);
     ofDrawLine(position.x,position.y-5,position.z,position.x,position.y+5,position.z);
-    
-   // font->drawString("CLIENT", position.x,position.y);
       
-    
     if(t>=1){
         t = 0;
     }
@@ -91,14 +84,13 @@ void Client::draw(ofTrueTypeFont * font){
     for(int i=0; i< beacons.size(); i++){
         
         // Draw beacons
-        beacons[i].draw(font);
+        beacons[i].draw();
         
         // Draw line between beacons and client
         ofSetColor(255);
         ofDrawLine(position.x, position.y, position.z, beacons[i].position.x, beacons[i].position.y, beacons[i].position.z);
-        
-
 
     }
+    
     t += 0.001;
 }

@@ -1,8 +1,5 @@
 //
 //  Client.hpp
-//  emptyExample
-//
-//  Created by Daan Korssen on 05/09/2019.
 //
 
 #ifndef Client_hpp
@@ -14,11 +11,11 @@
 
 class Client {
         
-    public: // place public functions or variables declarations here
+    public:
         
         void setup();
         void update();
-        void draw(ofTrueTypeFont *);
+        void draw();
     
         int id;
         ofPoint position;

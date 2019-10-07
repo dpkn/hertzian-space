@@ -1,8 +1,5 @@
 //
 //  Packet.hpp
-//  emptyExample
-//
-//  Created by Daan Korssen on 04/09/2019.
 //
 
 #ifndef Packet_hpp
@@ -16,7 +13,7 @@ class Beacon;
 
 class Packet {
     
-    public: // place public functions or variables declarations here
+    public:
     
         void setup();
         void update();

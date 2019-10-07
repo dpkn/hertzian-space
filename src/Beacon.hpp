@@ -1,8 +1,5 @@
 //
 //  Beacon.hpp
-//  emptyExample
-//
-//  Created by Daan Korssen on 05/09/2019.
 //
 
 #ifndef Beacon_hpp
@@ -16,16 +13,16 @@ class Client;
 
 class Beacon {
     
-public: // place public functions or variables declarations here
+public:
     
     Client* client;
     
     void setup(Client* _client);
     void update();
-    void draw(ofTrueTypeFont * font);
+    void draw();
     
     ofPoint position;
-    float speedY;   // speed and direction
+    float speedY;
     float speedX;
     float speedZ;
 

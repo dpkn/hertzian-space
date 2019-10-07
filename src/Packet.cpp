@@ -1,8 +1,5 @@
 //
 //  Packet.cpp
-//  emptyExample
-//
-//  Created by Daan Korssen on 04/09/2019.
 //
 
 #include "Packet.hpp"

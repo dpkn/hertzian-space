@@ -1,8 +1,5 @@
 //
 //  Beacon.cpp
-//  emptyExample
-//
-//  Created by Daan Korssen on 05/09/2019.
 //
 
 #include "Beacon.hpp"
@@ -93,17 +90,15 @@ void Beacon::update(){
   }
 }
 
-void Beacon::draw(ofTrueTypeFont * font){
+void Beacon::draw(){
     
-    // White sphere
+    // Draw white sphere
     ofSetSphereResolution(4);
     ofSetColor(255);
     ofNoFill();
     ofDrawSphere(position.x, position.y, position.z, 18);
-
-    //font->drawString("BEACON", position.x,position.y);
     
-    // Blue cross in the middle
+    // Blue plus Sign in the middle (+)
     ofSetColor(0,0,255);
     ofDrawLine(position.x-5,position.y,position.z,position.x+5,position.y,position.z);
     ofDrawLine(position.x,position.y-5,position.z,position.x,position.y+5,position.z);
