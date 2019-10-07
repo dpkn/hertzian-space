@@ -1,53 +1,35 @@
 #pragma once
 
+#include "MovingBall.hpp"
+#include "BackgroundController.hpp"
 #include "Packet.hpp"
 #include "Client.hpp"
 
 #include "ofMain.h"
 
 class ofApp : public ofBaseApp{
-	public:
-		void setup();
-		void update();
-		void draw();
+    public:
+    void setup();
+    void update();
+    void draw();
+    void resetView();
     
-        void setupArduino(const int &version);
-        void audioOut( ofSoundBuffer &outBuffer);
-        void receiveString(const string& message);
-    
-        double phase;
-        double frequency;
-    
-        int backgroundValue;
-        int backgroundCounter;
-        int backgroundFadeSpeed;
-    
-        int followTargetClient;
-        int followTargetBeacon;
-   float cameraDistance;
-    float distanceSpeed;
-    int finishedPositionType;
-    
-    Client* finishedClient;
-    Beacon* finishedBeacon;
-    
-    bool finishedFollowingPacket = false;
-   ofPoint finishedPosition;
+    BackgroundController backgroundController;
 
-    int backgroundMode;
-    
-        vector<Packet> packets;
-        vector<Client> clients;
-    
-        ofArduino arduino;
-        ofTrueTypeFont arialFont;
-    
-        ofSoundStream soundStream;
-        ofSoundPlayer bgSound;
-        ofSoundPlayer highBeep;
-        ofSoundPlayer  buildUp;  
-    
-        ofEasyCam camera;
-        ofLight light; 
+    float cameraDistance;
+    float distanceSpeed;
+    Packet* cameraTarget;
+    MovingBall* finishedTarget;
+    bool finishedFollowingPacket = false;
+
+    float timerStartTime;
+
+    vector<Packet> packets;
+    vector<Client> clients;
+
+    ofSoundPlayer bgSound;
+    ofSoundPlayer highBeep;
+
+    ofEasyCam camera;
 
 };

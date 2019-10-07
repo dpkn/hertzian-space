@@ -6,60 +6,42 @@
 #include "Client.hpp"
 #include "Beacon.hpp"
 
-Packet::Packet(float _speed,float _direction,Client* _client, Beacon* _beacon){
+#include "MovingBall.hpp"
+
+Packet::Packet(){
+    
+}
+
+void Packet::setup(MovingBall* _origin, MovingBall* _destination, float _speed){
+    origin = _origin;
+    position = _origin->position;
+    destination = _destination;
     speed = _speed;
-    direction = _direction;
-    if(direction == 1){
-        progress = 0;
-    }else{
-        progress = 1;
-    }
     
     finished = false;
     deletable = false;
-        client = _client;
-    beacon = _beacon;
 }
 
-void Packet::setup(){
-
-}
-
-ofPoint Packet::getDestinationPosition(){
-    if(direction == 1){
-        return client->position;
-    }else{
-        return beacon->position;
-    }
-}
-
-int Packet::getDestinationType(){
-    if(direction == 1){
-        return 1;
-    }else{
-        return 2;
-    }
-}
 void Packet::update(){
 
-    position.x = ofLerp(beacon->position.x, client->position.x, progress);
-    position.y = ofLerp(beacon->position.y, client->position.y, progress);
-    position.z = ofLerp(beacon->position.z, client->position.z, progress);
+    position.x = ofLerp(origin->position.x, destination->position.x, progress);
+    position.y = ofLerp(origin->position.y, destination->position.y, progress);
+    position.z = ofLerp(origin->position.z, destination->position.z, progress);
 
-    if(!finished){
-        progress += speed * direction;
+    if(!finished && progress >= 1){
+        finished = true;
+        startTime = ofGetElapsedTimeMillis();
+        
+    }else if(!finished){
+        progress += speed;
+        
     }else if(finished && !deletable){
         float timer = ofGetElapsedTimeMillis() - startTime;
+        
         if (timer >= 1000) {
             deletable = true;
         }
     }
-    
-    if(!finished && ((progress >= 1 && direction == 1) || (progress <= 0 && direction == -1))){
-        finished = true;
-        startTime = ofGetElapsedTimeMillis();
-    }
-    
 }
 
 void Packet::draw(){

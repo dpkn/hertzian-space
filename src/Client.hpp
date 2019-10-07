@@ -7,23 +7,16 @@
 
 #include <stdio.h>
 #include "ofMain.h"
+#include "MovingBall.hpp"
 #include "Beacon.hpp"
 
-class Client {
+class Client : public MovingBall {
         
     public:
         
         void setup();
         void update();
         void draw();
-    
-        int id;
-        ofPoint position;
-        float t;
-    
-        float speedY; 
-        float speedX;
-        float speedZ;;
     
         vector<Beacon> beacons;
     

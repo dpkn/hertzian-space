@@ -6,6 +6,7 @@
 #define Packet_hpp
 
 #include <stdio.h>
+#include "MovingBall.hpp"
 #include "ofMain.h"
 
 class Client;
@@ -13,27 +14,25 @@ class Beacon;
 
 class Packet {
     
-    public:
+public:
     
-        void setup();
-        void update();
-        void draw();
-    
-        Client* client;
-        Beacon* beacon;
-    
-        float speed;
-        float progress;
-    float direction;
+    void setup(MovingBall* _origin, MovingBall* _destination, float _speed);
+    void update();
+    void draw();
+
+    MovingBall* origin;
+    MovingBall* destination;
+
+    float speed;
+    float progress;
     
     bool finished;
     bool deletable;
     float startTime;
     
     ofPoint position;
-        Packet(float _speed, float _direction, Client* _client, Beacon* _beacon);
-    ofPoint getDestinationPosition();
-    int getDestinationType();
+    Packet();
+    
     private:
 };
 

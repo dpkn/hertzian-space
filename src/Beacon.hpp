@@ -7,11 +7,12 @@
 
 #include <stdio.h>
 #include "ofMain.h"
+#include "MovingBall.hpp"
 #include "Packet.hpp"
 
 class Client;
 
-class Beacon {
+class Beacon : public MovingBall{
     
 public:
     
@@ -20,12 +21,6 @@ public:
     void setup(Client* _client);
     void update();
     void draw();
-    
-    ofPoint position;
-    float speedY;
-    float speedX;
-    float speedZ;
-
     
     int packetLimit;
     

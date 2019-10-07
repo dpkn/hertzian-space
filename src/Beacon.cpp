@@ -10,6 +10,7 @@ Beacon::Beacon(){
 }
 
 void Beacon::setup(Client* _client){
+    MovingBall::setup(900);
     
     client = _client;
     
@@ -38,56 +39,44 @@ void Beacon::setup(Client* _client){
 }
 
 void Beacon::update(){
-    if(position.x < -900 ){
-        position.x = -900;
-        speedX *= -1;
-    } else if(position.x >900){
-        position.x = 900;
-        speedX *= -1;
-    }
     
-    if(position.y < -900 ){
-        position.y = -900;
-        speedY *= -1;
-    } else if(position.y > 900){
-        position.y = 900;
-        speedY *= -1;
-    }
+    // Update position and direction in parent class
+    MovingBall::update();
     
-    if(position.z < -900 ){
-        position.z = -900;
-        speedZ *= -1;
-    } else if(position.z > 900){
-        position.z = 900;
-        speedZ *= -1;
-    }
     
-     position.x+=speedX;
-        position.y+=speedY;
-    position.z+=speedZ;
-    
-    if(ofGetElapsedTimeMillis() % 2000 <= 300){
+    // Every X minutes change the amount of packets on a connection
+    if(ofGetElapsedTimeMillis() % 5000 <= 10){
         ofLog(OF_LOG_NOTICE,"Changed packetLimit");
         packetLimit = ofRandom(5,10);
     }
     
+    // If there are less packets on the connection than the limit
+    // specifies, add one more.
     if(packets.size() < packetLimit){
+        
+        // Random speed
         float speed = ofRandom(0.01,0.001);
-        float direction = 1;
+
+        // Decide if the packet goes from client>packet or reverse
+        Packet packet;
         if(ofRandom(1)>0.5){
-            direction = -1;
+            packet.setup(client,this,speed);
+        }else{
+            packet.setup(this,client,speed);
         }
-        Packet packet = Packet(speed,direction,client,this);
+        
         packets.push_back(packet);
     }
     
-  for(int i=0; i< packets.size(); i++){
-      if(packets[i].deletable){
+    // Delete all packets that are ready to be deleted
+    // and update the rest
+    for(int i=0; i< packets.size(); i++){
+        if(packets[i].deletable){
           packets.erase(packets.begin() + i);
-      }else{
-        packets[i].update();
-      }
-  }
+        }else{
+            packets[i].update();
+        }
+    }
 }
 
 void Beacon::draw(){
@@ -104,7 +93,8 @@ void Beacon::draw(){
     ofDrawLine(position.x,position.y-5,position.z,position.x,position.y+5,position.z);
     ofNoFill();
     
+    // Update the children
     for(int i=0; i< packets.size(); i++){
-         packets[i].draw();
-     }
+        packets[i].draw();
+    }
 }
