@@ -5,6 +5,9 @@
 #include "MovingBall.hpp"
 void MovingBall::setup(int _boundingBoxSize){
     boundingBoxSize = _boundingBoxSize;
+    speedX = ofRandom(-0.3, 0.3);
+    speedY = ofRandom(-0.3, 0.3);
+    speedZ = ofRandom(-0.3, 0.3);
 }
 
 void MovingBall::update(){

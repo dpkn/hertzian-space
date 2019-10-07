@@ -19,10 +19,6 @@ void Client::setup(){
     
     beacons.assign(ofRandom(10,15),Beacon());
     
-    speedX = ofRandom(0, 0.5);
-    speedY = ofRandom(0, 0.5);
-    speedZ = ofRandom(0, 0.5);
-    
     for(int i=0; i< beacons.size(); i++){
         beacons[i].setup(this);
     }

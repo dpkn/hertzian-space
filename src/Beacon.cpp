@@ -6,35 +6,35 @@
 #include "Client.hpp"
 
 Beacon::Beacon(){
-    packetLimit = ofRandom(5,10);
+
 }
 
 void Beacon::setup(Client* _client){
     MovingBall::setup(900);
-    
     client = _client;
     
+    packetLimit = ofRandom(5,10);
+
+    // Pick a random direction for every axis
     float xDir = 1;
     if(ofRandom(1) > 0.5){
         xDir = -1;
     }
     float yDir = 1;
-      if(ofRandom(1) > 0.5){
-          yDir = -1;
-      }
+    if(ofRandom(1) > 0.5){
+        yDir = -1;
+    }
     float zDir = 1;
-      if(ofRandom(1) > 0.5){
-          zDir = -1;
-      }
-   int x = client->position.x + ofRandom(60,350) *  xDir;
-   int y = client->position.y + ofRandom(60,350) *  yDir;
-   int z = client->position.z + ofRandom(60,350) * zDir;
+    if(ofRandom(1) > 0.5){
+        zDir = -1;
+    }
     
+    // Place beacon a random distance + direction from its parent Client
+    int x = client->position.x + ofRandom(60,350) *  xDir;
+    int y = client->position.y + ofRandom(60,350) *  yDir;
+    int z = client->position.z + ofRandom(60,350) * zDir;
+
     position.set(x,y,z);
-    
-    speedX = ofRandom(-0.3, 0.3);
-    speedY = ofRandom(-0.3, 0.3);
-    speedZ = ofRandom(-0.3, 0.3);
     
 }
 
