@@ -10,6 +10,8 @@
 		855C0DCF233E8B320017BF48 /* Client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 855C0DC9233E8B320017BF48 /* Client.cpp */; };
 		855C0DD0233E8B320017BF48 /* Packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 855C0DCA233E8B320017BF48 /* Packet.cpp */; };
 		855C0DD1233E8B320017BF48 /* Beacon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 855C0DCE233E8B320017BF48 /* Beacon.cpp */; };
+		8561E4BE234B32A3001A472B /* MovingBall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8561E4BC234B32A3001A472B /* MovingBall.cpp */; };
+		8561E4C1234B46B0001A472B /* BackgroundController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8561E4BF234B46B0001A472B /* BackgroundController.cpp */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
 /* End PBXBuildFile section */
@@ -33,6 +35,10 @@
 		855C0DCC233E8B320017BF48 /* Client.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Client.hpp; sourceTree = "<group>"; };
 		855C0DCD233E8B320017BF48 /* Packet.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Packet.hpp; sourceTree = "<group>"; };
 		855C0DCE233E8B320017BF48 /* Beacon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Beacon.cpp; sourceTree = "<group>"; };
+		8561E4BC234B32A3001A472B /* MovingBall.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MovingBall.cpp; sourceTree = "<group>"; };
+		8561E4BD234B32A3001A472B /* MovingBall.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MovingBall.hpp; sourceTree = "<group>"; };
+		8561E4BF234B46B0001A472B /* BackgroundController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BackgroundController.cpp; sourceTree = "<group>"; };
+		8561E4C0234B46B0001A472B /* BackgroundController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BackgroundController.hpp; sourceTree = "<group>"; };
 		E42962AC2163EDD300A6A9E2 /* ofCamera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ofCamera.cpp; path = ../../libs/openFrameworks/3d/ofCamera.cpp; sourceTree = SOURCE_ROOT; };
 		E42962AD2163EDD300A6A9E2 /* ofMesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofMesh.h; path = ../../libs/openFrameworks/3d/ofMesh.h; sourceTree = SOURCE_ROOT; };
 		E42962AE2163EDD300A6A9E2 /* ofNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ofNode.h; path = ../../libs/openFrameworks/3d/ofNode.h; sourceTree = SOURCE_ROOT; };
@@ -548,6 +554,10 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				8561E4BF234B46B0001A472B /* BackgroundController.cpp */,
+				8561E4C0234B46B0001A472B /* BackgroundController.hpp */,
+				8561E4BC234B32A3001A472B /* MovingBall.cpp */,
+				8561E4BD234B32A3001A472B /* MovingBall.hpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -650,10 +660,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8561E4C1234B46B0001A472B /* BackgroundController.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				855C0DCF233E8B320017BF48 /* Client.cpp in Sources */,
 				855C0DD1233E8B320017BF48 /* Beacon.cpp in Sources */,
+				8561E4BE234B32A3001A472B /* MovingBall.cpp in Sources */,
 				855C0DD0233E8B320017BF48 /* Packet.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
