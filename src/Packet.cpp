@@ -8,10 +8,12 @@
 
 #include "MovingBall.hpp"
 
+//--------------------------------------------------------------
 Packet::Packet(){
     
 }
 
+//--------------------------------------------------------------
 void Packet::setup(MovingBall* _origin, MovingBall* _destination, float _speed){
     origin = _origin;
     position = _origin->position;
@@ -22,6 +24,7 @@ void Packet::setup(MovingBall* _origin, MovingBall* _destination, float _speed){
     deletable = false;
 }
 
+//--------------------------------------------------------------
 void Packet::update(){
 
     position.x = ofLerp(origin->position.x, destination->position.x, progress);
@@ -44,6 +47,7 @@ void Packet::update(){
     }
 }
 
+//--------------------------------------------------------------
 void Packet::draw(){
     if(!finished){
         ofSetColor(0,255,0);

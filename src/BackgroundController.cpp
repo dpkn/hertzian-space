@@ -4,10 +4,13 @@
 //
 
 #include "BackgroundController.hpp"
+
+//--------------------------------------------------------------
 void BackgroundController::setup(){
    reset();
 }
 
+//--------------------------------------------------------------
 // is called everytime the background needs to appear for a fading flash
 void BackgroundController::reset(){
     // Pick a mode (Grid or Full color) and speed.
@@ -21,6 +24,7 @@ void BackgroundController::reset(){
     brightness = 255;
 }
 
+//--------------------------------------------------------------
 void BackgroundController::update(){
     // Fade out the background
     if(brightness>0){
@@ -28,7 +32,7 @@ void BackgroundController::update(){
     }
 }
 
-
+//--------------------------------------------------------------
 void BackgroundController::draw(){
     // BackgroundMode 1 is a grid overlay
     if(mode == 1 && brightness != 0){

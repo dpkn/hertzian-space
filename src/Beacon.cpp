@@ -9,6 +9,7 @@ Beacon::Beacon(){
 
 }
 
+//--------------------------------------------------------------
 void Beacon::setup(Client* _client){
     MovingBall::setup(900);
     client = _client;
@@ -38,6 +39,7 @@ void Beacon::setup(Client* _client){
     
 }
 
+//--------------------------------------------------------------
 void Beacon::update(){
     
     // Update position and direction in parent class
@@ -79,6 +81,7 @@ void Beacon::update(){
     }
 }
 
+//--------------------------------------------------------------
 void Beacon::draw(){
     
     // Draw white sphere

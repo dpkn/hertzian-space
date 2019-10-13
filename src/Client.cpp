@@ -8,6 +8,7 @@ Client::Client(){
     
 }
 
+//--------------------------------------------------------------
 void Client::setup(){
     MovingBall::setup(550);
     
@@ -24,6 +25,7 @@ void Client::setup(){
     }
 }
 
+//--------------------------------------------------------------
 void Client::update(){
 
     // Update position and direction in parent class
@@ -36,6 +38,7 @@ void Client::update(){
     
 }
 
+//--------------------------------------------------------------
 void Client::draw(){
     
     // Draw a red sphere
