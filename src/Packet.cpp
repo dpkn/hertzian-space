@@ -33,13 +33,13 @@ void Packet::update(){
 
     if(!finished && progress >= 1){
         finished = true;
-        startTime = ofGetElapsedTimeMillis();
+        finishTime = ofGetElapsedTimeMillis();
         
     }else if(!finished){
         progress += speed;
         
     }else if(finished && !deletable){
-        float timer = ofGetElapsedTimeMillis() - startTime;
+        float timer = ofGetElapsedTimeMillis() - finishTime;
         
         if (timer >= 1000) {
             deletable = true;

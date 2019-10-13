@@ -28,7 +28,7 @@ public:
     
     bool finished;
     bool deletable;
-    float startTime;
+    float finishTime;
     
     ofPoint position;
     Packet();
