@@ -65,7 +65,7 @@ void ofApp::draw(){
         clients[i].draw();
     }
     
-    // If the packet has reached its destination, s its destination
+    // If the packet has reached its destination, set camera target to its destination
     if(finishedFollowingPacket){
         
         camera.setTarget(finishedTarget->position);
@@ -80,7 +80,7 @@ void ofApp::draw(){
         
         camera.setTarget(cameraTarget->position);
         
-        // Switch Camera target over to the Packets' destinatio
+        // Switch Camera target over to the Packets' destination
         // so the packet can be deleted.
         if(cameraTarget->finished){
             finishedFollowingPacket = true;
