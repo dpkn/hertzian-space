@@ -48,7 +48,6 @@ void Beacon::update(){
     
     // Every X minutes change the amount of packets on a connection
     if(ofGetElapsedTimeMillis() % 5000 <= 10){
-        ofLog(OF_LOG_NOTICE,"Changed packetLimit");
         packetLimit = ofRandom(5,10);
     }
     

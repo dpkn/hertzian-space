@@ -2,8 +2,7 @@
 //  Packet.hpp
 //
 
-#ifndef Packet_hpp
-#define Packet_hpp
+#pragma once
 
 #include <stdio.h>
 #include "MovingBall.hpp"
@@ -35,5 +34,3 @@ public:
     
     private:
 };
-
-#endif /* Packet_hpp */

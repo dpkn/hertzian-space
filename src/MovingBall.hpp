@@ -2,8 +2,7 @@
 //  MovingBall.hpp
 //
 
-#ifndef MovingBall_hpp
-#define MovingBall_hpp
+#pragma once
 
 #include <stdio.h>
 #include "ofMain.h"
@@ -21,4 +20,3 @@ public:
 
 };
 
-#endif /* MovingBall_hpp */

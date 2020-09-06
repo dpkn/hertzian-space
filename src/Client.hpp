@@ -2,8 +2,7 @@
 //  Client.hpp
 //
 
-#ifndef Client_hpp
-#define Client_hpp
+#pragma once
 
 #include <stdio.h>
 #include "ofMain.h"
@@ -23,7 +22,3 @@ class Client : public MovingBall {
         Client();
     private:
 };
-
-#endif /* Client_hpp */
-
-

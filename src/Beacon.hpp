@@ -2,8 +2,7 @@
 //  Beacon.hpp
 //
 
-#ifndef Beacon_hpp
-#define Beacon_hpp
+#pragma once
 
 #include <stdio.h>
 #include "ofMain.h"
@@ -29,5 +28,3 @@ public:
     Beacon();
 private:
 };
-
-#endif /* Beacon_hpp */

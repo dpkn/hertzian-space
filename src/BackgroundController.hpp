@@ -3,8 +3,7 @@
 //  hertzianSpace
 //
 
-#ifndef BackgroundController_hpp
-#define BackgroundController_hpp
+#pragma once
 
 #include <stdio.h>
 #include "ofMain.h"
@@ -21,5 +20,3 @@ public:
     int fadeSpeed;
     int brightness;
 };
-
-#endif /* BackgroundController_hpp */

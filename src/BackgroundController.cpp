@@ -16,10 +16,10 @@ void BackgroundController::reset(){
     // Pick a mode (Grid or Full color) and speed.
     if(ofRandom(1) > 0.5){
         mode = 1;
-        fadeSpeed = 3;
+        fadeSpeed =3;
     }else{
         mode = 0;
-        fadeSpeed = 5;
+        fadeSpeed = 6;
     }
     brightness = 255;
 }
@@ -35,27 +35,28 @@ void BackgroundController::update(){
 //--------------------------------------------------------------
 void BackgroundController::draw(){
     // BackgroundMode 1 is a grid overlay
-    if(mode == 1 && brightness != 0){
+    if(brightness > 0){
+        if(mode==0){
+            ofBackground(brightness);
+        }else{
+            // Calculate placement of the lines
+              int blockSize = 50;
+              int width = ofGetScreenWidth();
+              int height = ofGetScreenHeight();
+              int blockRows =   height/blockSize;
+              int blockColumns = width/blockSize;
+              ofSetColor(255,255,255,brightness);
 
-        // Calculate size of the grid and placement of the lines
-        int blockSize = 50;
-        int width = ofGetScreenWidth();
-        int height = ofGetScreenHeight();
-        int blockRows =   height/blockSize;
-        int blockColumns = width/blockSize;
-        ofSetColor(brightness);
-
-        // Draw grid
-        for(int row = 0; row<blockRows; row++){
-            ofDrawLine(0, row*blockSize, width, row*blockSize);
+              // Draw grid
+              for(int row = 1; row<blockRows+2; row++){
+                  ofDrawLine(0, row*blockSize, width, row*blockSize);
+              }
+              for(int column = 1; column<blockColumns+2; column++){
+                  ofDrawLine(column*blockSize,0,column*blockSize,height);
+              }
         }
-        for(int column = 0; column<blockColumns; column++){
-            ofDrawLine(column*blockSize,0,column*blockSize,height);
-        }
-
     }else{
-        // Mode 0 is a solid bg
-        ofBackground(brightness);
+        ofBackground(0);
     }
     
 }
