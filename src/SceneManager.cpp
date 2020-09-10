@@ -8,14 +8,19 @@
 #include "SceneManager.hpp"
 
 SceneManager::SceneManager(){
-    startScene(2);
+
 }
 
 void SceneManager::startScene(int scene){
     activeScene = scene;
     startedAt = ofGetElapsedTimeMillis();
+    startedAtF = ofGetElapsedTimef();
 }
 
 int SceneManager::getSceneProgress(){
     return ofGetElapsedTimeMillis() - startedAt;
+}
+
+float SceneManager::getSceneProgressF(){
+    return ofGetElapsedTimef() - startedAtF;
 }

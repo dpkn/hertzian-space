@@ -14,7 +14,9 @@ class SceneManager {
     SceneManager();
     int activeScene;
     int startedAt;
+    float startedAtF;
     int getSceneProgress();
+    float getSceneProgressF();
     
     void startScene(int scene);
 };

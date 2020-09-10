@@ -41,7 +41,7 @@ void Packet::update(){
     }else if(finished && !deletable){
         float timer = ofGetElapsedTimeMillis() - finishTime;
         
-        if (timer >= 1000) {
+        if (timer >= 15000) {
             deletable = true;
         }
     }

@@ -42,15 +42,21 @@ class ofApp : public ofBaseApp{
     ofSoundPlayer highBeep;
     ofSoundPlayer droneLow;
     ofSoundPlayer droneHigh;
+    ofSoundPlayer tickLow;
+    bool tickLowIsPlaying = false;
     
     float playedDroneAt;
     int droneCount = 0;
     
-    ofxPostProcessing post;
+    int screenWidth;
+    int screenHeight;
+    
+    ofTrueTypeFont font;
     
     ofxOscSender sender;
     ofxOscMessage m;
     
     ofEasyCam camera;
+    void changeScene(int scene);
 
 };

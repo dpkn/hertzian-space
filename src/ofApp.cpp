@@ -3,8 +3,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-//    post.init(ofGetWidth(), ofGetHeight());
-//    post.createPass<BloomPass>()->setEnabled(true);
+    ofEnableSmoothing();
+    
     ofSetFrameRate(60);
     
     ofHideCursor();
@@ -16,28 +16,34 @@ void ofApp::setup(){
         clients[i].setup();
     }
     backgroundController.setup();
-    
-//    // Load sounds
-//    bgSound.load("bg_music2_loud.mp3");
-//    bgSound.play();
-//    bgSound.setLoop(true);
-//    bgSound.setVolume(2);
-//
-    highBeep.load("beep_high.mp3");
-    highBeep.setMultiPlay(true);
-    highBeep.setVolume(0.4);
-    
-    droneLow.load("drone_low.mp3");
-    droneLow.setMultiPlay(false);
-    droneLow.setVolume(3);
-    
-    droneHigh.load("drone_high.mp3");
-    droneHigh.setMultiPlay(false);
-    droneHigh.setVolume(3);
 
     timerStartTime = ofGetElapsedTimeMillis();
     
-    resetView();
+    
+    //    // Load sounds
+        bgSound.load("bg_music2_loud.mp3");
+        bgSound.setLoop(true);
+        bgSound.setVolume(2);
+    //
+        highBeep.load("beep_high.mp3");
+        highBeep.setMultiPlay(true);
+        highBeep.setVolume(0);
+       // highBeep.setVolume(0.4);
+        
+        droneLow.load("drone_low.mp3");
+        droneLow.setMultiPlay(false);
+        droneLow.setVolume(3);
+        
+        droneHigh.load("drone_high.mp3");
+        droneHigh.setMultiPlay(false);
+        droneHigh.setVolume(3);
+        
+        tickLow.load("tick_low.mp3");
+        tickLow.setLoop(true);
+        tickLow.setVolume(3);
+        tickLow.setMultiPlay(false);
+        
+        font.load("cour.ttf", 12);
     
     wifiReader.getNetworks();
     
@@ -45,33 +51,46 @@ void ofApp::setup(){
     
     m.setAddress("/flash");
     sender.sendMessage(m);
+    
+    screenHeight = ofGetScreenHeight();
+    screenWidth = ofGetScreenWidth();
 
-    cameraDistance = 380;
+    changeScene(2);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     backgroundController.update();
+    int progress = sceneManager.getSceneProgress();
     
     if(sceneManager.activeScene == 1){
-            
-        // Update all clients
-        for(int i=0; i<clients.size(); i++){
-            clients[i].update();
-        }
         
-        // Every x seconds, reset view and follow a new packet
-        if(ofGetElapsedTimeMillis() - timerStartTime >= 3000){
-            resetView();
+           if(cameraDistance > 25){
+               cameraDistance += distanceSpeed;
+           }
+        if(progress > 75000){
+            changeScene(2);
         }
-        
-        // Zoom in or out of the camera
-        cameraDistance += distanceSpeed;
+    
     }else if(sceneManager.activeScene == 2){
         
-        if(cameraDistance > 25){
-            cameraDistance += distanceSpeed;
-        }
+         // Update all clients
+         for(int i=0; i<clients.size(); i++){
+             clients[i].update();
+         }
+         
+         // Every x seconds, reset view and follow a new packet
+         if(ofGetElapsedTimeMillis() - timerStartTime >= 10000){
+             resetView();
+         }
+         
+         // Zoom in or out of the camera
+         cameraDistance += distanceSpeed;
+        
+        if(progress > 5000){
+               changeScene(1);
+           }
+
     }
         
     // Log FPS
@@ -83,12 +102,33 @@ void ofApp::update(){
 void ofApp::draw(){
     backgroundController.draw();
     
+    ofEnableDepthTest();
+    
     if(sceneManager.activeScene == 1){
-        drawOverviewScene();
-    }else if(sceneManager.activeScene ==2 ){
         drawFocusScene();
+    }else if(sceneManager.activeScene ==2 ){
+        drawOverviewScene();
     }
     
+    ofDisableDepthTest();
+    // border
+    //    ofNoFill();
+    //    ofSetColor(255,0,0,255);
+    //    ofDrawRectangle(0, 1, ofGetScreenWidth()-1,ofGetScreenHeight()-1);
+    
+    // Fade in start of scene
+    int progress = sceneManager.getSceneProgress();
+    if(progress < 5000){
+        ofFill();
+        ofSetColor(0,0,0, ofMap(sceneManager.getSceneProgress(),0,5000,255,0));
+        ofDrawRectangle(0,0,screenWidth,screenHeight);
+    }
+    
+    // Letterbox
+    ofFill();
+    ofSetColor(0);
+    ofDrawRectangle(0, 0, screenWidth, 50);
+    ofDrawRectangle(0, screenHeight-50, screenWidth, 50);
 }
 
 // Function that is called when a new packet should be followed.
@@ -127,17 +167,13 @@ void ofApp::drawOverviewScene(){
     // Start of 3D context
     camera.begin();
 
-    ofEnableDepthTest();
-    // post.begin(camera);
-
     // Draw all Clients
     for(int i=0; i<clients.size(); i++){
       clients[i].draw();
     }
-
+    int progress = sceneManager.getSceneProgress();
     // If the packet has reached its destination, set camera target to its destination
-    // time check is an ugly for undefined target
-    if(finishedFollowingPacket && ofGetElapsedTimeMillis() >= 4000){
+    if(finishedFollowingPacket && progress > 0){
       
       camera.setTarget(finishedTarget->position);
       
@@ -155,6 +191,7 @@ void ofApp::drawOverviewScene(){
       // so the packet can be deleted.
       if(cameraTarget->finished){
           finishedFollowingPacket = true;
+//          ofLog(OF_LOG_NOTICE, std::to_string(cameraTarget.));
           finishedTarget = cameraTarget->destination;
       }
     }
@@ -163,6 +200,7 @@ void ofApp::drawOverviewScene(){
     camera.end();
     
 }
+
 void ofApp::drawFocusScene(){
     distanceSpeed = -0.1;
    
@@ -190,23 +228,21 @@ void ofApp::drawFocusScene(){
     int circleCount = 200;
     
     int progress = sceneManager.getSceneProgress();
-    
-    if(progress > 75000){
-        sceneManager.startScene(1);
-    }
+    float progressF = sceneManager.getSceneProgressF();
 
     for(int i=0; i<circleCount; i++){
+
         
-        int colorFade =  ofMap(sin(((ofGetElapsedTimef()*(progress/6000))+ PI*(circleCount-i)*0.01)*1.5), -1, 1, 255, 0);
+        int colorFade =  ofMap(sin(((progressF*(progressF/13))+ PI*(circleCount-i)*0.01)*1.5), -1, 1, 255, 0);
          
         ofSetColor(255,255,255,colorFade);
         ofPushMatrix();
 
        if(progress % 15000 > 11000 ){
           
-           int rotation = ofMap(sin((ofGetElapsedTimef())/4 + PI*(circleCount-i)*0.5), -1, 1, 0, 360);
-           int rotation2 = ofMap(sin((ofGetElapsedTimef())/4 + PI*(circleCount-i)*0.5 + 0.5*PI), -1, 1, 0, 180);
-           int rotation3 = ofMap(sin((ofGetElapsedTimef())/4 + PI*(circleCount-i)*0.5 + PI), -1, 1, 0, 360);
+           int rotation = ofMap(sin((progressF)/4 + PI*(circleCount-i)*0.5), -1, 1, 0, 360);
+           int rotation2 = ofMap(sin((progressF)/4 + PI*(circleCount-i)*0.5 + 0.5*PI), -1, 1, 0, 180);
+           int rotation3 = ofMap(sin((progressF)/4 + PI*(circleCount-i)*0.5 + PI), -1, 1, 0, 360);
 
            ofRotateYDeg(rotation);
            ofRotateXDeg(rotation2);
@@ -227,8 +263,121 @@ void ofApp::drawFocusScene(){
        ofPopMatrix();
     }
 
+
     camera.setTarget(position);
 
     camera.setDistance(cameraDistance);
     camera.end();
+    
+    
+    if(progress > 69000){
+        if(progress > 73000){
+//                if(!highPitchIsPlaying){
+//                    highPitch.play();
+//                    highPitchIsPlaying = true;
+//                 }
+               ofFill();
+               ofSetColor(255);
+               ofDrawRectangle(0, 0, screenWidth, screenHeight);
+        }else{
+            int chance = ofRandom(1,4);
+            ofFill();
+            ofSetColor(255);
+
+            if(chance == 1){
+                ofDrawRectangle(0, 0, screenWidth/2, screenHeight);
+            }else if(chance==2){
+               ofDrawRectangle(screenWidth/2, 0, screenWidth/2, screenHeight);
+            }
+        }
+    }
+    
+    if(progress > 64000){
+        
+        if(!tickLowIsPlaying){
+            tickLow.play();
+            tickLowIsPlaying = true;
+        }
+        
+        ofFill();
+           
+           int random = ofRandom(1,5);
+           ofColor color(0,0,0,255);
+           if(random==1){
+               color.r = 255;
+           }else if(random==2){
+               color.g = 255;
+           }else if (random ==3){
+               color.b = 255;
+           }else if (random == 4){
+               color.r = 255;
+               color.g = 255;
+               color.b = 255;
+           }
+           ofSetColor(color);
+        
+        int bars;
+        int maxThick;
+
+        
+        if(progress > 69000){
+            bars = ofRandom(30,100);
+            maxThick = 300*(1/bars);
+        }else{
+            bars = ofRandom(10,30);
+            maxThick = ofRandom(2,4);
+        }
+        
+        for(int i=0; i< bars; i++){
+            float height1 = ofRandom(1,maxThick);
+            float height2 = ofRandom(1,maxThick);
+          
+            float y1 = ofRandom(0,screenHeight);
+            float y2 = ofRandom(0,screenHeight);
+         
+            ofDrawRectangle(1, y1, screenWidth/2, height1);
+             ofDrawRectangle(screenWidth/2, y2, screenWidth, height2);
+          
+        };
+        for(int i=0; i< 10; i++){
+          float height3 = ofRandom(1,20);
+          float y3 = ofRandom(0,screenHeight);
+          ofDrawRectangle(1, y3, screenWidth, height3);
+        }
+
+        ofSetColor(255,255,255,255);
+        ofNoFill();
+    }
+    
+    if(progress > 65000){
+           
+           for (int i=0; i < wifiReader.networks.size(); i++) {
+              WifiNetwork network = wifiReader.networks[i];
+                font.drawString(network.strength + "dB", 110,100+i*15);
+              font.drawString(network.ssid, 200,100+i*15);
+              font.drawString(network.id, 400,100+i*15);
+               font.drawString(network.security, 600,100+i*15);
+    
+           }
+           
+       }
+
+
+}
+
+void ofApp::changeScene(int scene){
+    switch(scene){
+        case 1:
+            bgSound.stop();
+            camera.reset();
+            cameraDistance = 380;
+            break;
+        case 2:
+            resetView();
+            bgSound.play();
+            tickLow.stop();
+            break;
+            
+    }
+    sceneManager.startScene(scene);
 }
